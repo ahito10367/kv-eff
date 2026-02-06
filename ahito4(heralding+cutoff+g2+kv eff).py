@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def delete_noize_new(my_file, E, B, C, D, F, K, new_file, w=False):
+def delete_noize_new(my_file, E, B, C, D, F, K, new_file, w=False): # Функция убират не физичный или малозначительный шум детекторов. в зависимости от выставленного диапазона можно использовать для счетных или аналоговых детекторов
     f = open(my_file)
 
     A = []
@@ -17,7 +17,7 @@ def delete_noize_new(my_file, E, B, C, D, F, K, new_file, w=False):
     return B
 
 
-def G(X, Y, A, B, N1, N2):
+def G(X, Y, A, B, N1, N2): # Функция подсчета корреляционной функции, и квантовых эффективностей двух детекторов
     len_x = len(X)
     C = np.linspace(0, 0, len_x)
     for i in range(len_x):
@@ -50,7 +50,7 @@ def G(X, Y, A, B, N1, N2):
 
 q_APD = np.genfromtxt('C:/Users/ahito/Desktop/Взаимные калибровки/строб 900 от мощности + много шума/1.25m31s900O.txt', 'float64')
 q_PMT = np.genfromtxt('C:/Users/ahito/Desktop/Взаимные калибровки/строб 900 от мощности + много шума/1.25m31s900F.txt', 'float64')
-for k in range(572, 574, 2):
+for k in range(572, 574, 2): #heralding
     # q_APD_1 = np.array([], 'float64')
     # q_PMT_1 = np.array([], 'float64')
     with open('C:/Users/ahito/Desktop/3.txt', "w+") as file:
@@ -71,12 +71,12 @@ for k in range(572, 574, 2):
     fileVar = open(file_name, "a+")
     fileVar.close()
 
-    # for j in range(0, 1, 1):
+    # for j in range(0, 1, 1): # используя этот цикл реализуется метод cutoff
     # green
     X = delete_noize_new(my_file1, 1340, 10000, 0, 0, 0, 0, 'new_file1.txt')
     # orange
     Y = delete_noize_new(my_file2, 0, 99999, 0, 0, 0, 0, 'new_file2.txt')
-    g = G(X, Y, 1144, 1400, 0, 0) # последние два числа это найденное ранее Zшумовой
+    g = G(X, Y, 1144, 1400, 0, 0) # последние два числа это найденные ранее шумовые показания. Сначала загружаем в программу шумовой файл, запускаем программу а далее записываем нужные числа шума в нужных границах (тех же что и для шума) и после этого можем считать для сигнальных файлов корреляционные параметры
 
     # print(j)
     print(k)
